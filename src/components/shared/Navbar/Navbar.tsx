@@ -1,39 +1,61 @@
+
+
 "use client";
-import { Button } from "@/components/ui/button";
-
 import Link from "next/link";
-import { Logo } from "./logo";
-import { NavMenu } from "./nav-menu";
-import { NavigationSheet } from "./navigation-sheet";
+import { useState, useEffect } from "react";
 
-const Navbar = () => {
+
+export default function Navbar() {
+  const [user, setUser] = useState<any>(null);
+
+
+
   return (
-    <nav className="fixed top-6 inset-x-4 h-16 max-w-screen-xl mx-auto rounded-full bg-background border dark:border-slate-700/70 z-30">
-      <div className="flex h-full items-center justify-between px-6 md:px-8">
-        {/* Logo with consistent padding */}
-        <Link href="/" className="flex-shrink-0 ">
-          <Logo />
+    <nav className="bg-white shadow-md fixed w-full top-0 z-50">
+      <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+        {/* Logo */}
+        <Link href="/" className="text-xl font-bold text-blue-600">
+          MyPortfolio
         </Link>
 
-        {/* Desktop Menu with consistent horizontal spacing */}
-        <NavMenu className="hidden md:block" />
+        {/* Menu */}
+        <div className="hidden md:flex space-x-6">
+          <Link href="/">Home</Link>
+          <Link href="/about">About</Link>
+          <Link href="/blogs">Blogs</Link>
+          <Link href="/projects">Projects</Link>
+          <Link href="/resume">Resume</Link>
+          <Link href="/contact">Contact</Link>
+          <Link href="/register">Register</Link>
 
-        {/* Actions and Mobile Menu */}
-        <div className="flex items-center gap-4 md:gap-6">
-          <Button className="rounded-full px-5 py-2 text-sm md:text-base">
-            <Link href="/login" className="block w-full text-center">
-              Login
-            </Link>
-          </Button>
+          {/* Auth Links */}
+          {!user && <Link href="/login">Login</Link>}
 
-          {/* Mobile Menu */}
-          <div className="md:hidden">
-            <NavigationSheet />
-          </div>
+          {user?.role === "USER" && (
+            <>
+              <Link href="/resume">My Resume</Link>
+              <button onClick={() => { localStorage.removeItem("token"); location.reload(); }}>
+                Logout
+              </button>
+            </>
+          )}
+
+          {user?.role === "ADMIN" && (
+            <>
+              <Link href="/dashboard">Dashboard</Link>
+              <button onClick={() => { localStorage.removeItem("token"); location.reload(); }}>
+                Logout
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>
   );
-};
+}
 
-export default Navbar;
+
+
+
+
+

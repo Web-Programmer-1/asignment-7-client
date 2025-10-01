@@ -1,16 +1,24 @@
-import Footer from "@/components/shared/Footer";
-import Navbar from "@/components/shared/Navbar/Navbar";
 
-export default function PublicLayout({
-  children,
-}: Readonly<{
+
+import Footer from "@/components/shared/Footer";
+import Portfolio from "@/components/shared/Home";
+
+import Navbar from "@/components/shared/Navbar/Navbar";
+import React from "react";
+
+interface IChildren {
   children: React.ReactNode;
-}>) {
+}
+
+export default function PublicLayout({ children }: IChildren) {
   return (
-    <>
+    <div>
       <Navbar />
-      <main className="min-h-dvh">{children}</main>
-      <Footer />
-    </>
+      <Portfolio></Portfolio>
+
+      <main className="min-h-dvh ">{children}</main>
+      <Footer></Footer>
+     
+    </div>
   );
 }
