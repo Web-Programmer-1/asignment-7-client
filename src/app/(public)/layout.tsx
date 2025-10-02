@@ -15,7 +15,7 @@ export default function PublicLayout({ children }: IChildren) {
     <div>
       <Navbar />
       <Portfolio></Portfolio>
-
+      
       <main className="min-h-dvh ">{children}</main>
       <Footer></Footer>
      
