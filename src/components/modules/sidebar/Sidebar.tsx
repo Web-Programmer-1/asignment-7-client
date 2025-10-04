@@ -1,160 +1,131 @@
-import React from "react";
+
+
+
+
+
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export default function Sidebar() {
+  const pathname = usePathname();
+  const [openProject, setOpenProject] = useState(false);
+
+  // helper fn for active class
+  const getLinkClass = (href: string) => {
+    const base = "flex items-center p-3 rounded-lg transition font-medium";
+    const active =
+      "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md";
+    const normal =
+      "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700";
+    return pathname === href ? `${base} ${active}` : `${base} ${normal}`;
+  };
+
   return (
-    <div>
-      {/* Mobile button */}
-      <button
-        data-drawer-target="logo-sidebar"
-        data-drawer-toggle="logo-sidebar"
-        aria-controls="logo-sidebar"
-        type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden 
-                   hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 
-                   dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-      >
-        <span className="sr-only">Open sidebar</span>
-        <svg
-          className="w-6 h-6"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clipRule="evenodd"
-            fillRule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 
-               012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 
-               010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 
-               0 01.75-.75h14.5a.75.75 0 010 
-               1.5H2.75A.75.75 0 012 10z"
+    <aside
+      id="logo-sidebar"
+      className="fixed top-0 left-0 z-40 w-64 mx-auto h-screen transition-transform 
+                 -translate-x-full sm:translate-x-0 bg-white dark:bg-gray-900 shadow-lg"
+      aria-label="Sidebar"
+    >
+      <div className="h-full px-4 py-6 overflow-y-auto">
+        {/* Logo */}
+        <Link href="/" className="flex items-center ps-2.5 mb-8">
+          <img
+            src="https://flowbite.com/docs/images/logo.svg"
+            className="h-7 me-3"
+            alt="Logo"
           />
-        </svg>
-      </button>
+          <span className="self-center text-xl font-bold whitespace-nowrap dark:text-white">
+            My Dashboard
+          </span>
+        </Link>
 
-      {/* Sidebar */}
-      <aside
-        id="logo-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform 
-                   -translate-x-full sm:translate-x-0"
-        aria-label="Sidebar"
-      >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <a href="/" className="flex items-center ps-2.5 mb-5">
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-6 me-3 sm:h-7"
-              alt="Logo"
-            />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              My Dashboard
-            </span>
-          </a>
+        {/* Menu */}
+        <ul className="space-y-3">
+          <li>
+            <Link href="/dashboard" className={getLinkClass("/dashboard")}>
+              Dashboard
+            </Link>
+          </li>
 
-          <ul className="space-y-2 font-medium">
-            {/* Dashboard */}
-            <li>
-              <a
-                href="/dashboard"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
-                           hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 
-                             group-hover:text-gray-900 dark:group-hover:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 22 21"
-                >
-                  <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 
-                           8.5 8.5 0 1 0 9.039 9.039.999.999 
-                           0 0 0-1-1.066h.002Z" />
-                  <path d="M12.5 0c-.157 0-.311.01-.565.027A1 
-                           1 0 0 0 11 1.02V10h8.975a1 1 
-                           0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 
-                           8.51 0 0 0 12.5 0Z" />
-                </svg>
-                <span className="ms-3">Dashboard</span>
-              </a>
-            </li>
+          <li>
+            <Link
+              href="/dashboard/inbox"
+              className={getLinkClass("/dashboard/inbox")}
+            >
+              Inbox
+            </Link>
+          </li>
 
-            {/* Inbox */}
-            <li>
-              <a
-                href="/dashboard/inbox"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
-                           hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 
-                             group-hover:text-gray-900 dark:group-hover:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 
-                           0016 4H4a2 2 0 00-1.997 1.884z" />
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 
-                           002 2h12a2 2 0 002-2V8.118z" />
-                </svg>
-                <span className="ms-3">Inbox</span>
-              </a>
-            </li>
+          <li>
+            <Link
+              href="/dashboard/user"
+              className={getLinkClass("/dashboard/user")}
+            >
+              Users
+            </Link>
+          </li>
 
-            {/* Users */}
-            <li>
-              <a
-                href="/dashboard/users"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
-                           hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 
-                             group-hover:text-gray-900 dark:group-hover:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M10 12a5 5 0 100-10 5 5 0 
-                           000 10zm-7 8a7 7 0 0114 0H3z" />
-                </svg>
-                <span className="ms-3">Users</span>
-              </a>
-            </li>
+          {/* Project Dropdown */}
+          <li>
+            <button
+              onClick={() => setOpenProject(!openProject)}
+              className={`w-full flex items-center justify-between p-3 rounded-lg transition font-medium ${
+                openProject
+                  ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                  : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              }`}
+            >
+              <span>Projects</span>
+              <ChevronDownIcon
+                className={`w-5 h-5 transition-transform ${
+                  openProject ? "rotate-180" : ""
+                }`}
+              />
+            </button>
 
-            {/* Products */}
-            <li>
-              <a
-                href="/dashboard/products"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white 
-                           hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 
-                             group-hover:text-gray-900 dark:group-hover:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M5 4a2 2 0 00-2 2v10a2 2 
-                           0 002 2h10a2 2 0 002-2V6a2 2 
-                           0 00-2-2H5z" />
-                  <path d="M9 2h2v4H9V2zM2 9h16v2H2V9z" />
-                </svg>
-                <span className="ms-3">Products</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </aside>
-
-      {/* Content Area */}
-      <div className="p-4 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-          <h1 className="text-2xl font-bold">hhjfu</h1>
-        </div>
+            {openProject && (
+              <ul className="ml-4 mt-2 space-y-2">
+                <li>
+                  <Link
+                    href="/dashboard/project/create"
+                    className={getLinkClass("/dashboard/project/create")}
+                  >
+                    ➕ Create Project
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/dashboard/dash-project/get-all-project"
+                    className={getLinkClass("/dashboard/project/all")}
+                  >
+                    📂 All Projects
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/dashboard/project/update"
+                    className={getLinkClass("/dashboard/project/update")}
+                  >
+                    ✏️ Update Project
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+        </ul>
       </div>
-    </div>
+    </aside>
   );
 }
+
+
+
+
+
+
+
