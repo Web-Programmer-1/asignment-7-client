@@ -1,10 +1,19 @@
+
+
+
+
+
+
+
+
 "use client";
 
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
-import { FiExternalLink, FiUser, FiMail } from "react-icons/fi";
+import { FiUser, FiMail, FiTrash2 } from "react-icons/fi";
 import Link from "next/link";
 import { VscLiveShare } from "react-icons/vsc";
+import Swal from "sweetalert2";
 
 interface User {
   name: string;
@@ -23,6 +32,8 @@ interface Project {
   user?: User;
 }
 
+
+
 const featureColors = [
   "from-pink-400 to-red-500",
   "from-blue-300 to-sky-500",
@@ -35,27 +46,29 @@ export default function GetAllProject() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // 🔍 Filters
+  // Filters
   const [search, setSearch] = useState("");
   const [feature, setFeature] = useState("");
   const [minClick, setMinClick] = useState(0);
   const [maxClick, setMaxClick] = useState(1000);
   const [sortOrder, setSortOrder] = useState("desc");
 
-  // 📄 Pagination
+  // Pagination
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  // Fetch Projects
   const fetchProjects = async () => {
     setLoading(true);
     try {
       const res = await api.get(
-        `/project?page=${page}&limit=6&search=${search}&features=${feature}&minClick=${minClick}&maxClick=${maxClick}&sortBy=clickCount&order=${sortOrder}`
+        `/project?page=${page}&limit=6&search=${search}&features=${feature}&minClick=${minClick}&maxClick=${maxClick}&sortBy=clickCount&order=${sortOrder}`,
+        { withCredentials: true }
       );
       setProjects(res.data.data.data || []);
       setTotalPages(res.data.data.totalPages || 1);
     } catch (err) {
-      console.error("Error fetching projects", err);
+      console.error("❌ Error fetching projects", err);
     } finally {
       setLoading(false);
     }
@@ -64,6 +77,40 @@ export default function GetAllProject() {
   useEffect(() => {
     fetchProjects();
   }, [search, feature, minClick, maxClick, sortOrder, page]);
+
+  // 🔥 Delete Handler with SweetAlert
+  const handleDelete = async (id: number) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This project will be permanently deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!confirm.isConfirmed) return;
+
+    try {
+      const res = await api.delete(`/project/${id}`, { withCredentials: true });
+
+      if (res.status === 200) {
+        Swal.fire("Deleted!", "Your project has been deleted.", "success");
+        // UI থেকে remove করা
+        setProjects((prev) => prev.filter((p) => p.id !== id));
+      } else {
+        Swal.fire("Failed!", "Could not delete the project.", "error");
+      }
+    } catch (error: any) {
+      console.error("Delete error:", error);
+      const message =
+        error.response?.status === 403
+          ? "You are not allowed to delete this project."
+          : "Something went wrong!";
+      Swal.fire("Unauthorized!", message, "error");
+    }
+  };
 
   return (
     <div className="p-6">
@@ -130,7 +177,7 @@ export default function GetAllProject() {
 
       {/* Project Cards */}
       {loading ? (
-        <p className="text-center">Loading projects...</p>
+        <p className="text-center text-gray-500">Loading projects...</p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p) => (
@@ -162,11 +209,11 @@ export default function GetAllProject() {
                 </p>
 
                 {/* Features */}
-                <div className="flex flex-wrap gap-2 mt-5">
+                <div className="flex flex-wrap gap-2 mt-4">
                   {p.features.map((f, i) => (
                     <span
                       key={i}
-                      className={`px-2  mt-[-7px] text-[14px]  font-bold rounded bg-gray-100 dark:bg-gray-800 bg-clip-text opacity-[70%]  text-transparent bg-gradient-to-r ${
+                      className={`px-2 text-[13px] font-bold rounded bg-clip-text opacity-[70%] text-transparent bg-gradient-to-r ${
                         featureColors[i % featureColors.length]
                       }`}
                     >
@@ -190,7 +237,7 @@ export default function GetAllProject() {
                   </div>
 
                   {p.user && (
-                    <div className="mt-2 flex flex-col gap-1 text-gray-700 dark:text-gray-300 tex-lg text-shadow-2xs font-medium opacity-[55%] mb-10">
+                    <div className="mt-3 flex flex-col gap-2 text-gray-700 dark:text-gray-300 font-medium opacity-[75%]">
                       <span className="flex items-center gap-2">
                         <FiUser /> {p.user.name}
                       </span>
@@ -198,36 +245,37 @@ export default function GetAllProject() {
                         <FiMail /> {p.user.email}
                       </span>
 
-                      <div className="flex gap-40 items-center">
-                        {/* live btn */}
-
-                        <button className="text-white mt-3  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none w-[30%] px-2.5 py-1  rounded-md flex justify-center items-center gap-1 text-lg">
+                      {/* Buttons */}
+                      <div className="flex justify-between mt-4">
+                        <button
+                          onClick={() => window.open(p.liveUrl, "_blank")}
+                          className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br px-3 py-1 rounded-md flex items-center gap-1 text-sm"
+                        >
                           <VscLiveShare /> Live
                         </button>
 
-                        {/* views More BTn */}
-
                         <Link href={`/project/${p.id}`}>
-                          <button
-                            className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br
-                      text-md rounded-md py-2 px-10"
-                          >
-                            View{" "}
+                          <button className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-md text-sm">
+                            View
                           </button>
                         </Link>
-
-                        {/* update btn */}
-
                       </div>
 
+                      {/* Edit & Delete */}
+                      <div className="flex justify-between mt-3">
                         <Link href={`/dashboard/dash-project/update-project/${p.id}`}>
-                          <button
-                            className="text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br
-     text-md rounded-md py-2 px-8 mt-2 mx-auto text-center flex justify-center items-center"
-                          >
-                            ✏️ Edit Project
+                          <button className="text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br px-4 py-1 rounded-md text-sm">
+                            ✏️ Edit
                           </button>
                         </Link>
+
+                        <button
+                          onClick={() => handleDelete(p.id)}
+                          className="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br px-4 py-1 rounded-md text-sm flex items-center gap-1"
+                        >
+                          <FiTrash2 /> Delete
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -237,7 +285,7 @@ export default function GetAllProject() {
         </div>
       )}
 
-      {/* 📌 Pagination */}
+      {/* Pagination */}
       <div className="flex justify-center gap-4 mt-6">
         <button
           disabled={page === 1}

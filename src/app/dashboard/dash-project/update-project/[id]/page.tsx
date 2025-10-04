@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 export default function UpdateProjectPage() {
   const router = useRouter();
-  const { id } = useParams(); // ✅ dynamic route থেকে project id
+  const { id } = useParams(); 
   const [loading, setLoading] = useState(true);
 
   // 🧠 All project fields
