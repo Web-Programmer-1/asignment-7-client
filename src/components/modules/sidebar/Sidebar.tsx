@@ -277,9 +277,20 @@ export default function Sidebar() {
                   >
                      All Projects
                   </Link>
+             
+                </li>
 
-
-               
+                {/* Top Clicked 4 projects */}
+                <li>
+                  <Link
+                    href="/dashboard/dash-project/top-click"
+                    className={getLinkClass(
+                      "/dashboard/dash-project/top-click"
+                    )}
+                  >
+                     Top Click-(4)
+                  </Link>
+             
                 </li>
               </ul>
             )}

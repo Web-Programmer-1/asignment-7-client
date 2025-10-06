@@ -8,6 +8,7 @@ import { FiUser, FiMail, FiTrash2 } from "react-icons/fi";
 import Link from "next/link";
 import { VscLiveShare } from "react-icons/vsc";
 import Swal from "sweetalert2";
+import RippleLoader from "@/components/laoding/RippleLoader";
 
 interface User {
   name: string;
@@ -191,7 +192,10 @@ export default function GetAllProject() {
 
       {/* Project Cards */}
       {loading ? (
-        <p className="text-center text-gray-500">Loading projects...</p>
+        <p className="text-center text-gray-500">
+          <RippleLoader size={80}  color="indigo-500"></RippleLoader>
+        
+          </p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p) => (
