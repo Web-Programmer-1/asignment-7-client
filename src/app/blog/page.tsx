@@ -114,6 +114,7 @@ export default function AllBlogsClients() {
     if (page > 1) setPage((p) => p - 1);
   };
 
+  
   return (
     <section className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-10 px-4 sm:px-6 lg:px-10 transition-all duration-300">
       <div className="max-w-7xl mx-auto">

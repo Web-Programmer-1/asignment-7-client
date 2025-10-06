@@ -192,8 +192,13 @@ export default function ProjectForm() {
         authorId: 6,
       };
 
+      // const res = await axios.post(
+      //   "http://localhost:5000/api/v1/project",
+      //   payload,
+      //   { withCredentials: true }
+      // );
       const res = await axios.post(
-        "http://localhost:5000/api/v1/project",
+        `${process.env.NEXT_PUBLIC_BASE_API}/project`,
         payload,
         { withCredentials: true }
       );
