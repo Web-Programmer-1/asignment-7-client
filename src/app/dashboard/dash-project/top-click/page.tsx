@@ -20,9 +20,11 @@ export default function TopClickedProjects() {
   useEffect(() => {
     const fetchTopProjects = async () => {
       try {
+        // fix top clicked
         const res = await axios.get("https://a-7-portfolio-backend.vercel.app/api/v1/project/top-clicked", {
           withCredentials: true,
         });
+
         if (res.data.success) setProjects(res.data.data);
       } catch (err) {
         console.error("Error fetching projects:", err);
