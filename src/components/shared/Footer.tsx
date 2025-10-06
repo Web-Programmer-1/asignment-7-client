@@ -1,8 +1,9 @@
+import Footer from "../modules/footer/Footer";
 
-export default function Footer() {
+export default function FooterPage() {
   return (
     <div>
-      <h1 className="text-4xl text-center">This is Footer Pages</h1>
+    <Footer></Footer>
     </div>
   )
 }

@@ -55,10 +55,10 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-// 🎨 Poppins font
+
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"], // যেগুলো দরকার রাখো
+  weight: ["300", "400", "500", "600", "700", "800"], 
   variable: "--font-poppins",
 });
 
@@ -78,7 +78,10 @@ export default function RootLayout({
         className={`${poppins.variable} font-sans antialiased`} 
       >
         <div>
-          {children}
+           
+              {children}
+            
+           
         </div>
         <Toaster position="top-right" reverseOrder={false} />
       </body>

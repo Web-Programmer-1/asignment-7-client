@@ -43,7 +43,7 @@ const Certificate = () => {
 
         {/* Certificates Grid */}
         <div className="grid grid-cols-12 gap-6 text-center">
-          {/* 👉 এখানে নিজের image গুলো বসাবে */}
+         
           <div className="col-span-12 sm:col-span-6 md:col-span-4">
             <ServiceItem
               image="https://scontent.frjh7-1.fna.fbcdn.net/v/t39.30808-6/488447846_975834958019343_5163210679315779534_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeETDAGfb43_12p92mtGRgnsKMcOmL52ZXQoxw6YvnZldHQBvuDiZ3pbhNDU9bEEj4SebW0VY6_cxd5mE3Tq-Ow9&_nc_ohc=yxKQY6xJJZYQ7kNvwEQzKyG&_nc_oc=Adnu3Vu-V-mHgQP1KJ2-XGzxLsuqRRMhPe9695GhUCMN6_ftRyqfZZddlLCFWf5U-jRyp2r-PkgrP4nrRJ942uAR&_nc_zt=23&_nc_ht=scontent.frjh7-1.fna&_nc_gid=swAYHoiVL47HRCmVUPektg&oh=00_AfYSk3Tz64F2ewKsj58JbSh3T-LoMake6r2lk_PQqIuvHg&oe=68E45FB8"

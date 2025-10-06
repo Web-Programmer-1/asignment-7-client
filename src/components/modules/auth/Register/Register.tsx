@@ -1,7 +1,8 @@
+
+
 "use client";
 
 import { useState } from "react";
-
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import api from "@/lib/api";
@@ -20,54 +21,68 @@ export default function Register() {
       await api.post("/auth", form);
       toast.success("Registration successful! Please login.");
       router.push("/login");
-    console.log(form)
-    
-      console.log()
+      console.log(form);
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Registration failed");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-96"
+        className="bg-white p-8 rounded-lg shadow-lg w-96 max-w-md"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create Account</h2>
+        
+        {/* Name Input */}
         <input
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="Full Name"
           value={form.name}
           onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
+        
+        {/* Email Input */}
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="Email Address"
           value={form.email}
           onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
+        
+        {/* Password Input */}
         <input
           type="password"
           name="password"
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
+        
+        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          className="w-full bg-indigo-600 text-white py-3 rounded-lg mt-4 hover:bg-indigo-700 transition duration-300"
         >
           Register
         </button>
+        
+        {/* Login Link */}
+        <div className="mt-4 text-center text-gray-600">
+          <p>
+            Already have an account?{" "}
+            <a href="/login" className="text-indigo-600 hover:underline">Login</a>
+          </p>
+        </div>
       </form>
     </div>
   );

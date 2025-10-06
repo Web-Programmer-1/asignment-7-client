@@ -1,8 +1,6 @@
 
 
 
-
-
 // "use client";
 
 // import Link from "next/link";
@@ -15,7 +13,6 @@
 //   const [openProject, setOpenProject] = useState(false);
 //   const [openBlog, setOpenBlog] = useState(false);
 
-//   // helper fn for active class
 //   const getLinkClass = (href: string) => {
 //     const base = "flex items-center p-3 rounded-lg transition font-medium";
 //     const active =
@@ -33,7 +30,6 @@
 //       aria-label="Sidebar"
 //     >
 //       <div className="h-full px-4 py-6 overflow-y-auto">
-//         {/* Logo */}
 //         <Link href="/" className="flex items-center ps-2.5 mb-8">
 //           <img
 //             src="https://flowbite.com/docs/images/logo.svg"
@@ -45,7 +41,6 @@
 //           </span>
 //         </Link>
 
-//         {/* Menu */}
 //         <ul className="space-y-3">
 //           <li>
 //             <Link href="/dashboard" className={getLinkClass("/dashboard")}>
@@ -71,11 +66,6 @@
 //             </Link>
 //           </li>
 
-        
-
-
-
-//           {/* Project Dropdown */}
 //           <li>
 //             <button
 //               onClick={() => setOpenProject(!openProject)}
@@ -97,8 +87,8 @@
 //               <ul className="ml-4 mt-2 space-y-2">
 //                 <li>
 //                   <Link
-//                     href="/dashboard/project/create"
-//                     className={getLinkClass("/dashboard/project/create")}
+//                     href="/dashboard/dash-project/create-dash-project"
+//                     className={getLinkClass("/dashboard/dash-project/create-dash-project")}
 //                   >
 //                     ➕ Create Project
 //                   </Link>
@@ -106,70 +96,63 @@
 //                 <li>
 //                   <Link
 //                     href="/dashboard/dash-project/get-all-project"
-//                     className={getLinkClass("/dashboard/project/all")}
+//                     className={getLinkClass(
+//                       "/dashboard/dash-project/get-all-project"
+//                     )}
 //                   >
 //                     📂 All Projects
 //                   </Link>
 //                 </li>
-//                 <li>
-//                   {/* <Link
-//                     href="/dashboard/project/update"
-//                     className={getLinkClass("/dashboard/project/update")}
-//                   >
-//                     ✏️ Update Project
-//                   </Link> */}
-//                 </li>
 //               </ul>
 //             )}
 //           </li>
-     
 
-
-
-//                {/* Blogs  Dropdown */}
 //           <li>
 //             <button
 //               onClick={() => setOpenBlog(!openBlog)}
 //               className={`w-full flex items-center justify-between p-3 rounded-lg transition font-medium ${
-//                 openProject
+//                 openBlog
 //                   ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
 //                   : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
 //               }`}
 //             >
-//               <span>Projects</span>
+//               <span>Blogs</span>
 //               <ChevronDownIcon
 //                 className={`w-5 h-5 transition-transform ${
-//                   openProject ? "rotate-180" : ""
+//                   openBlog ? "rotate-180" : ""
 //                 }`}
 //               />
 //             </button>
 
-//             {openProject && (
+//             {openBlog && (
 //               <ul className="ml-4 mt-2 space-y-2">
 //                 <li>
 //                   <Link
-//                     href="/dashboard/project/create"
-//                     className={getLinkClass("/dashboard/project/create")}
+//                     href="/dashboard/blog/create-blog"
+//                     className={getLinkClass("/dashboard/blog/create")}
 //                   >
-//                     ➕ Create Project
+//                      Create Blog
 //                   </Link>
 //                 </li>
 //                 <li>
 //                   <Link
-//                     href="/dashboard/dash-project/get-all-project"
-//                     className={getLinkClass("/dashboard/project/all")}
+//                     href="/dashboard/blog/all-blog"
+//                     className={getLinkClass("/dashboard/blog/all-blog")}
 //                   >
-//                     📂 All Projects
+//                      All Blogs
 //                   </Link>
 //                 </li>
-                
+//                 <li>
+//                   <Link
+//                     href="/dashboard/blog/categories"
+//                     className={getLinkClass("/dashboard/blog/categories")}
+//                   >
+//                      Categories
+//                   </Link>
+//                 </li>
 //               </ul>
 //             )}
 //           </li>
-
-
-
-
 //         </ul>
 //       </div>
 //     </aside>
@@ -191,6 +174,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [openProject, setOpenProject] = useState(false);
   const [openBlog, setOpenBlog] = useState(false);
+  const [openResume, setOpenResume] = useState(false); // 🆕 Resume Dropdown State
 
   const getLinkClass = (href: string) => {
     const base = "flex items-center p-3 rounded-lg transition font-medium";
@@ -216,7 +200,7 @@ export default function Sidebar() {
             alt="Logo"
           />
           <span className="self-center text-xl font-bold whitespace-nowrap dark:text-white">
-            My Dashboard
+            Portfolio Dashboard
           </span>
         </Link>
 
@@ -229,10 +213,19 @@ export default function Sidebar() {
 
           <li>
             <Link
-              href="/dashboard/inbox"
-              className={getLinkClass("/dashboard/inbox")}
+              href="/dashboard/device-activity"
+              className={getLinkClass("/dashboard/device-activity")}
             >
-              Inbox
+              Device Activity Log
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href="/dashboard/today-visitor"
+              className={getLinkClass("/dashboard/today-visitor")}
+            >
+              Today Visitor
             </Link>
           </li>
 
@@ -245,6 +238,7 @@ export default function Sidebar() {
             </Link>
           </li>
 
+          {/* 🧩 Project Dropdown */}
           <li>
             <button
               onClick={() => setOpenProject(!openProject)}
@@ -267,9 +261,11 @@ export default function Sidebar() {
                 <li>
                   <Link
                     href="/dashboard/dash-project/create-dash-project"
-                    className={getLinkClass("/dashboard/dash-project/create-dash-project")}
+                    className={getLinkClass(
+                      "/dashboard/dash-project/create-dash-project"
+                    )}
                   >
-                    ➕ Create Project
+                     Create Project
                   </Link>
                 </li>
                 <li>
@@ -279,13 +275,17 @@ export default function Sidebar() {
                       "/dashboard/dash-project/get-all-project"
                     )}
                   >
-                    📂 All Projects
+                     All Projects
                   </Link>
+
+
+               
                 </li>
               </ul>
             )}
           </li>
 
+          {/* 📰 Blog Dropdown */}
           <li>
             <button
               onClick={() => setOpenBlog(!openBlog)}
@@ -308,7 +308,7 @@ export default function Sidebar() {
                 <li>
                   <Link
                     href="/dashboard/blog/create-blog"
-                    className={getLinkClass("/dashboard/blog/create")}
+                    className={getLinkClass("/dashboard/blog/create-blog")}
                   >
                      Create Blog
                   </Link>
@@ -326,8 +326,51 @@ export default function Sidebar() {
                     href="/dashboard/blog/categories"
                     className={getLinkClass("/dashboard/blog/categories")}
                   >
-                     Categories
+                    🏷️ Categories
                   </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          {/* 🧾 Resume Dropdown */}
+          <li>
+            <button
+              onClick={() => setOpenResume(!openResume)}
+              className={`w-full flex items-center justify-between p-3 rounded-lg transition font-medium ${
+                openResume
+                  ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                  : "text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              }`}
+            >
+              <span>Resume</span>
+              <ChevronDownIcon
+                className={`w-5 h-5 transition-transform ${
+                  openResume ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {openResume && (
+              <ul className="ml-4 mt-2 space-y-2">
+                <li>
+                  <Link
+                    href="/dashboard/resume/create-resume"
+                    className={getLinkClass("/dashboard/resume/create-resume")}
+                  >
+                     Create Resume
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/dashboard/resume/all-resume"
+                    className={getLinkClass("/dashboard/resume/get-all-resume")}
+                  >
+                     All Resume
+                  </Link>
+                </li>
+                <li>
+                  
                 </li>
               </ul>
             )}

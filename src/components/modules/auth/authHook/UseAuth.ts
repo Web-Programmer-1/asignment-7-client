@@ -1,3 +1,6 @@
+
+
+
 "use client";
 
 import api from "@/lib/api";
@@ -13,12 +16,18 @@ export function useAuth(requiredRole?: "USER" | "ADMIN") {
         const res = await api.get("/auth/me", { withCredentials: true });
         const userData = res.data.user;
 
-        if (requiredRole && userData.role !== requiredRole) {
+
+        if (
+          requiredRole &&
+          userData.role !== requiredRole &&
+          userData.role !== "ADMIN"
+        ) {
           setUser(null);
         } else {
           setUser(userData);
         }
-      } catch (err) {
+      } catch (error: any) {
+        console.error("Auth check failed:", error.response?.data || error.message);
         setUser(null);
       } finally {
         setLoading(false);

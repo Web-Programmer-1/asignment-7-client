@@ -1,8 +1,10 @@
+import DashboardStats from "@/components/modules/dashboard/DashboardStats";
 
 export default function DashboardPages() {
   return (
     <div>
-      <h1>This is a Dashboard Pages</h1>
+
+      <DashboardStats></DashboardStats>
     </div>
   )
 }

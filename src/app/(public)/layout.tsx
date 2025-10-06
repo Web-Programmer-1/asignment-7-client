@@ -5,8 +5,9 @@ import Portfolio from "@/components/shared/Home";
 
 import Navbar from "@/components/shared/Navbar/Navbar";
 import React from "react";
-import BlogPage from "./blog/page";
-import MainBlogPage from "./blog/main-blog/page";
+import AllBlogsClients from "../blog/page";
+
+
 
  export interface IChildren {
   children: React.ReactNode;
@@ -18,9 +19,9 @@ export default function PublicLayout({ children }: IChildren) {
       <Navbar />
       <Portfolio></Portfolio>
       
-      <main className="min-h-dvh ">{children}</main>
+     <main className="min-h-dvh ">{children}</main>
 
-      <MainBlogPage></MainBlogPage>
+      <AllBlogsClients></AllBlogsClients>
       <Footer></Footer>
      
     </div>
