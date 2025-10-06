@@ -33,33 +33,55 @@ const featureColors = [
 
 export default function ProjectList() {
   const [projects, setProjects] = useState<Project[]>([]);
+  console.log(projects)
   const [loading, setLoading] = useState(false);
 
-  // 🔍 Filters
   const [search, setSearch] = useState("");
   const [feature, setFeature] = useState("");
   const [minClick, setMinClick] = useState(0);
   const [maxClick, setMaxClick] = useState(1000);
   const [sortOrder, setSortOrder] = useState("desc");
 
-  // 📄 Pagination
+  
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const fetchProjects = async () => {
-    setLoading(true);
-    try {
-      const res = await api.get(
-        `/project?page=${page}&limit=6&search=${search}&features=${feature}&minClick=${minClick}&maxClick=${maxClick}&sortBy=clickCount&order=${sortOrder}`
-      );
-      setProjects(res.data.data.data || []);
-      setTotalPages(res.data.data.totalPages || 1);
-    } catch (err) {
-      console.error("Error fetching projects", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchProjects = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await api.get(
+  //       `/project?page=${page}&limit=6&search=${search}&features=${feature}&minClick=${minClick}&maxClick=${maxClick}&sortBy=clickCount&order=${sortOrder}`
+  //     );
+  //     setProjects(res.data.data.data || []);
+  //     setTotalPages(res.data.data.totalPages || 1);
+  //   } catch (err) {
+  //     console.error("Error fetching projects", err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+   const fetchProjects = async () => {
+  setLoading(true);
+  try {
+    const res = await api.get(
+      `/project?page=${page}&limit=6&search=${search}&features=${feature}&minClick=${minClick}&maxClick=${maxClick}&sortBy=clickCount&order=${sortOrder}`
+    );
+
+    
+    const projectsData = res.data?.data?.data || [];
+    const paginationData = res.data?.data?.pagination || { totalPages: 1, page: 1 };
+
+    setProjects(projectsData);
+    setTotalPages(paginationData.totalPages || 1);
+  } catch (err) {
+    console.error("❌ Error fetching projects", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   useEffect(() => {
     fetchProjects();
