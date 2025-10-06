@@ -415,7 +415,7 @@ export default function GetAllProject() {
     if (!confirm.isConfirmed) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/v1/project/${id}`, {
+      const res = await fetch(`https://a-7-portfolio-backend.vercel.app/api/v1/project/${id}`, {
         method: "DELETE",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
