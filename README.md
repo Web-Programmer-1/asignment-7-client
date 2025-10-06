@@ -90,12 +90,3 @@ Backend
 Demo Video
 Link: https://drive.google.com/file/d/19r1qBC9-hU2zTo6mSPOgTTwpuKObONrs/view?fbclid=IwY2xjawNQxtxleHRuA2FlbQIxMABicmlkETFNTERvYktQa0xEU1QwdDZaAR4zN38kSPHeWlgXglg2EIshCqYSe_au0LUodi8VVWg4LajArX08M78cMev6Qg_aem_XaczGGeX3gxv5A8gxdcpKw
 
-
-Author
-------------------------------------
-
-Name: Md Abdul Hakim
-Email: mdhakimshorkar123@gmail.com
-Email: nowshad.dev@example.com
-
-GitHub: https://github.com/nowshad-dev
