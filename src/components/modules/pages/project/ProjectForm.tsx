@@ -165,7 +165,7 @@ export default function ProjectForm() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<string[]>([]); // শুধু message রাখবো
+  const [errors, setErrors] = useState<string[]>([]); 
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -198,7 +198,7 @@ export default function ProjectForm() {
       //   { withCredentials: true }
       // );
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_API}/project`,
+        `https://a-7-portfolio-backend.vercel.app/api/v1/project`,
         payload,
         { withCredentials: true }
       );
