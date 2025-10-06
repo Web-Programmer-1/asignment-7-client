@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import Head from "next/head";
 import { useAuth } from "@/components/modules/auth/authHook/UseAuth";
+import { useRouter } from "next/navigation";
 
 
 
@@ -14,6 +15,7 @@ import { useAuth } from "@/components/modules/auth/authHook/UseAuth";
 export default function CreatePublicResume() {
   const { user, loading } = useAuth();
   const [submitting, setSubmitting] = useState(false);
+  const router = useRouter();
 
   const [form, setForm] = useState({
     fullName: "",
@@ -90,12 +92,18 @@ export default function CreatePublicResume() {
     try {
       setSubmitting(true);
       const res = await api.post("/resume", payload, { withCredentials: true });
-      Swal.fire({
-        icon: "success",
-        title: "🎉 Resume Created Successfully!",
-        text: res.data.message,
-        confirmButtonColor: "#3085d6",
-      });
+
+      
+
+Swal.fire({
+  icon: "success",
+  title: "🎉 Resume Created Successfully!",
+  text: res.data.message,
+  confirmButtonColor: "#3085d6",
+});
+
+router.push("/resume/my-resume")
+
 
       setForm({
         fullName: "",
@@ -119,6 +127,8 @@ export default function CreatePublicResume() {
         linkedinUrl: "",
         githubUrl: "",
       });
+
+    
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -224,3 +234,11 @@ export default function CreatePublicResume() {
     </>
   );
 }
+
+
+
+
+
+
+
+

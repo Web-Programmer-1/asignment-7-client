@@ -57,7 +57,9 @@ const Portfolio = () => {
             <div className="relative">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-sky-400 dark:to-indigo-500 bg-clip-text text-transparent">
-                  <ResizeHandle />
+              
+                      <ResizeHandle />
+           
                 </span>
               </h1>
             </div>
