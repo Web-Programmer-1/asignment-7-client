@@ -22,7 +22,7 @@ export default function SingleProjectPage({ params }: { params: { id: string } }
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/v1/project/${params.id}`, {
+        const res = await axios.get(`https://a-7-portfolio-backend.vercel.app/api/v1/project/${params.id}`, {
           withCredentials: true, 
         });
 
