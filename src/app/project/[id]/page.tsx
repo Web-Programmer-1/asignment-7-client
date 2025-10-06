@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import RippleLoader from "@/components/laoding/RippleLoader";
 
 interface Project {
   id: number;
@@ -46,7 +47,7 @@ export default function SingleProjectPage({ params }: { params: { id: string } }
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-600 text-lg">Loading project...</p>
+        <p className="text-gray-600 text-lg"><RippleLoader></RippleLoader></p>
       </div>
     );
   }

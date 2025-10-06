@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import { FaUser, FaProjectDiagram, FaBlog, FaEye } from "react-icons/fa";
+import RippleLoader from "@/components/laoding/RippleLoader";
 
 
 export default function DashboardStats() {
@@ -23,7 +24,7 @@ export default function DashboardStats() {
   }, []);
 
   if (!stats) {
-    return <p>Loading dashboard...</p>;
+    return <p><RippleLoader></RippleLoader></p>;
   }
 
   return (

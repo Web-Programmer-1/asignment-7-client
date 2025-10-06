@@ -260,6 +260,7 @@ import {
 } from "lucide-react";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import RippleLoader from "@/components/laoding/RippleLoader";
 
 interface Resume {
   id: number;
@@ -357,7 +358,7 @@ export default function AllResumePage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-gray-600 dark:text-gray-300 text-lg animate-pulse">
-          Loading all resumes...
+         <RippleLoader></RippleLoader>
         </p>
       </div>
     );

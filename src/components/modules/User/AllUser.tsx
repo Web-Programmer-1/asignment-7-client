@@ -1,5 +1,6 @@
 
 "use client";
+import RippleLoader from "@/components/laoding/RippleLoader";
 import { getAllUsers } from "@/lib/userApi/user";
 import { useEffect, useState } from "react";
 
@@ -46,7 +47,7 @@ export default function AllUsers() {
     fetchUsers();
   }, [page, emailFilter, roleFilter]);
 
-  if (loading) return <p className="text-center py-6">Loading...</p>;
+  if (loading) return <p className="text-center py-6"><RippleLoader></RippleLoader></p>;
 
   return (
     <div className="max-w-6xl mx-auto shadow-md sm:rounded-lg p-4 bg-white dark:bg-gray-900">

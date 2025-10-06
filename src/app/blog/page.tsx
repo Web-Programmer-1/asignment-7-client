@@ -1,8 +1,3 @@
-
-
-
-
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -22,6 +17,7 @@ import { IoFilterCircleSharp } from "react-icons/io5";
 import { BiSearchAlt } from "react-icons/bi";
 import { BsEyeFill } from "react-icons/bs";
 import Link from "next/link";
+import RippleLoader from "@/components/laoding/RippleLoader";
 
 interface Author {
   id: number;
@@ -65,6 +61,10 @@ export default function AllBlogsClients() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  if(loading){
+    <p><RippleLoader></RippleLoader></p>
+  }
+
   const fetchBlogs = async () => {
     setLoading(true);
     try {
@@ -86,13 +86,12 @@ export default function AllBlogsClients() {
       });
 
       const blogsData = res.data?.data ?? [];
-      const paginationData =
-        res.data?.pagination ?? {
-          total: blogsData.length,
-          page: 1,
-          limit: 6,
-          totalPages: 1,
-        };
+      const paginationData = res.data?.pagination ?? {
+        total: blogsData.length,
+        page: 1,
+        limit: 6,
+        totalPages: 1,
+      };
 
       setBlogs(blogsData);
       setPagination(paginationData);
@@ -114,7 +113,6 @@ export default function AllBlogsClients() {
     if (page > 1) setPage((p) => p - 1);
   };
 
-  
   return (
     <section className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-10 px-4 sm:px-6 lg:px-10 transition-all duration-300">
       <div className="max-w-7xl mx-auto">
@@ -234,7 +232,7 @@ export default function AllBlogsClients() {
         {/* Blog Cards */}
         {loading ? (
           <p className="text-center text-gray-500 dark:text-gray-400 animate-pulse">
-            Loading blogs...
+          <RippleLoader size={100}></RippleLoader>
           </p>
         ) : blogs.length === 0 ? (
           <p className="text-center text-gray-500 dark:text-gray-400">
@@ -245,44 +243,68 @@ export default function AllBlogsClients() {
             layout
             className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {blogs.map((blog, index) => (
-              <motion.div
-                key={blog.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all p-5 sm:p-6 border border-gray-200 dark:border-gray-700"
-              >
-                <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
-                  {blog.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4">
-                  {blog.content}
-                </p>
+          
 
-                <div className="flex justify-between items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 border-t pt-3 border-gray-100 dark:border-gray-700">
-                  <span className="flex items-center gap-1">
-                    <CalendarDays size={14} />{" "}
-                    {new Date(blog.createAt).toLocaleDateString()}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Eye size={14} /> {blog.views}
-                  </span>
-                </div>
 
-                <div className="mt-4 flex items-center justify-between bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg px-3 py-2 text-white text-xs font-medium shadow-sm">
-                  <span className="flex items-center gap-1">
-                    <User size={12} /> {blog.author.name}
-                  </span>
-                  <a
-                    href={`mailto:${blog.author.email}`}
-                    className="underline hover:text-gray-100 truncate max-w-[120px]"
-                  >
-                    {blog.author.email}
-                  </a>
-                </div>
-              </motion.div>
-            ))}
+                {blogs.map((blog, index) => (
+  <motion.div
+    key={blog.id}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: index * 0.05 }}
+    className="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all p-5 sm:p-6 border border-gray-200 dark:border-gray-700 flex flex-col justify-between"
+  >
+    {/* Title & Description */}
+    <div>
+      <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+        {blog.title}
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4">
+        {blog.content}
+      </p>
+    </div>
+
+    {/* Footer Section */}
+    <div className="mt-auto">
+      {/* Date + Views */}
+      <div className="flex justify-between items-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 border-t pt-3 border-gray-100 dark:border-gray-700">
+        <span className="flex items-center gap-1">
+          <CalendarDays size={14} />
+          {new Date(blog.createAt).toLocaleDateString()}
+        </span>
+        <span className="flex items-center gap-1">
+          <Eye size={14} /> {blog.views}
+        </span>
+      </div>
+
+      {/* Author Info */}
+      <div className="mt-3 flex items-center justify-between bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg px-3 py-2 text-white text-xs font-medium shadow-sm">
+        <span className="flex items-center gap-1">
+          <User size={12} /> {blog.author.name}
+        </span>
+        <a
+          href={`mailto:${blog.author.email}`}
+          className="underline hover:text-gray-100 truncate max-w-[120px]"
+        >
+          {blog.author.email}
+        </a>
+      </div>
+
+      {/* View Button */}
+      <div className="mt-4 flex justify-center">
+        <Link
+          href={`/blog/${blog.id}`}
+          className="w-full text-center text-sm font-medium bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-5 py-2 rounded-xl shadow-md transition-all"
+        >
+          View Details
+        </Link>
+      </div>
+    </div>
+  </motion.div>
+))}
+
+
+
           </motion.div>
         )}
 
@@ -306,9 +328,23 @@ export default function AllBlogsClients() {
             >
               <ChevronRight size={18} />
             </button>
+
+            {/* view btn */}
           </div>
         )}
       </div>
     </section>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+

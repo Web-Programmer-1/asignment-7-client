@@ -111,7 +111,7 @@ export default function UpdateBlogPage() {
             disabled={loading}
             className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-500 to-sky-500 text-white font-semibold text-lg shadow-lg hover:shadow-xl hover:opacity-90 transition-all"
           >
-            {loading ? "Updating..." : "Update Blog"}
+            {loading ? "Updating..." : "Update Blog + View Count"}
           </button>
         </form>
       </div>

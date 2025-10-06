@@ -323,6 +323,7 @@ import { IoFilterCircleSharp } from "react-icons/io5";
 import { BiSearchAlt } from "react-icons/bi";
 import { BsEyeFill } from "react-icons/bs";
 import Link from "next/link";
+import RippleLoader from "@/components/laoding/RippleLoader";
 
 interface Author {
   id: number;
@@ -506,7 +507,7 @@ export default function AllBlogs() {
         {/* --- Blog Grid --- */}
         {loading ? (
           <p className="text-center text-gray-500 dark:text-gray-400 animate-pulse">
-            Loading blogs...
+           <RippleLoader></RippleLoader>
           </p>
         ) : blogs.length === 0 ? (
           <p className="text-center text-gray-500 dark:text-gray-400">
