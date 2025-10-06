@@ -203,7 +203,7 @@ Swal.fire({
           type="submit"
           className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-md hover:from-blue-600 hover:to-indigo-700 transition"
         >
-          ✅ Update Project
+           Update Project
         </button>
       </form>
     </div>

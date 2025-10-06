@@ -148,6 +148,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useAuth } from "../../auth/authHook/UseAuth";
 
 interface ApiError {
   code?: string;
@@ -156,6 +157,8 @@ interface ApiError {
 }
 
 export default function ProjectForm() {
+
+  const {user, loading:authLoading} = useAuth("ADMIN")
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -189,7 +192,7 @@ export default function ProjectForm() {
           ? formData.thumbnail.split(",").map((t) => t.trim())
           : [],
         liveUrl: formData.liveUrl,
-        authorId: 6,
+        authorId:3,
       };
 
       // const res = await axios.post(
@@ -205,7 +208,7 @@ export default function ProjectForm() {
 
       Swal.fire({
         icon: "success",
-        title: "✅ Success!",
+        title: "Success!",
         text: res.data.message || "Project created successfully!",
         timer: 2000,
         showConfirmButton: false,
