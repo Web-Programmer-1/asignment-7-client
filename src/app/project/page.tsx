@@ -1,10 +1,10 @@
-
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import { FiExternalLink, FiUser, FiMail } from "react-icons/fi";
 import Link from "next/link";
 import { VscLiveShare } from "react-icons/vsc";
+import RippleLoader from "@/components/laoding/RippleLoader";
 
 interface User {
   name: string;
@@ -33,7 +33,7 @@ const featureColors = [
 
 export default function ProjectList() {
   const [projects, setProjects] = useState<Project[]>([]);
-  console.log(projects)
+  console.log(projects);
   const [loading, setLoading] = useState(false);
 
   const [search, setSearch] = useState("");
@@ -42,7 +42,6 @@ export default function ProjectList() {
   const [maxClick, setMaxClick] = useState(1000);
   const [sortOrder, setSortOrder] = useState("desc");
 
-  
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -61,27 +60,27 @@ export default function ProjectList() {
   //   }
   // };
 
-   const fetchProjects = async () => {
-  setLoading(true);
-  try {
-    const res = await api.get(
-      `/project?page=${page}&limit=6&search=${search}&features=${feature}&minClick=${minClick}&maxClick=${maxClick}&sortBy=clickCount&order=${sortOrder}`
-    );
+  const fetchProjects = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get(
+        `/project?page=${page}&limit=6&search=${search}&features=${feature}&minClick=${minClick}&maxClick=${maxClick}&sortBy=clickCount&order=${sortOrder}`
+      );
 
-    
-    const projectsData = res.data?.data?.data || [];
-    const paginationData = res.data?.data?.pagination || { totalPages: 1, page: 1 };
+      const projectsData = res.data?.data?.data || [];
+      const paginationData = res.data?.data?.pagination || {
+        totalPages: 1,
+        page: 1,
+      };
 
-    setProjects(projectsData);
-    setTotalPages(paginationData.totalPages || 1);
-  } catch (err) {
-    console.error("❌ Error fetching projects", err);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
+      setProjects(projectsData);
+      setTotalPages(paginationData.totalPages || 1);
+    } catch (err) {
+      console.error("❌ Error fetching projects", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchProjects();
@@ -152,7 +151,7 @@ export default function ProjectList() {
 
       {/* Project Cards */}
       {loading ? (
-        <p className="text-center">Loading projects...</p>
+        <p className="text-center"><RippleLoader></RippleLoader></p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p) => (
@@ -183,7 +182,7 @@ export default function ProjectList() {
                   {p.description}
                 </p>
 
-                {/* Features */} 
+                {/* Features */}
                 <div className="flex flex-wrap gap-2 mt-5">
                   {p.features.map((f, i) => (
                     <span
@@ -219,25 +218,30 @@ export default function ProjectList() {
                       <span className="flex items-center gap-2">
                         <FiMail /> {p.user.email}
                       </span>
-
+                      {/* set live url */}
                       <div className="flex gap-40 items-center">
-                        {/* live btn */}
+                
+                        <Link
+                          href={p.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center justify-center gap-2 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:to-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md px-4 py-2 text-md transition-all duration-300 shadow-md hover:shadow-lg"
+                        >
+                          <VscLiveShare className="text-lg" />
+                          Live
+                        </Link>
 
-                      <button className="text-white mt-3  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none w-[30%] px-2.5 py-1  rounded-md flex justify-center items-center gap-1 text-lg">
-                        <VscLiveShare /> Live
-                      </button>
+                        {/* views More BTn */}
 
-                      {/* views More BTn */}
-
-                     <Link href={`/project/${p.id}`}>
-                     <button  
-                     className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br
+                        <Link href={`/project/${p.id}`}>
+                          <button
+                            className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br
                       text-md rounded-md py-2 px-10"
-                     >View </button>
-                     </Link>
-
+                          >
+                            View{" "}
+                          </button>
+                        </Link>
                       </div>
-
                     </div>
                   )}
                 </div>
@@ -270,4 +274,3 @@ export default function ProjectList() {
     </div>
   );
 }
-
